@@ -8,7 +8,7 @@
 bashio::log.info "Starting Erbium DNS/DHCP server..."
 
 # Get configuration options
-CONFIG_FILE="/config/erbium.conf"
+CONFIG_FILE="/data/erbium.conf"
 DHCP_START=$(bashio::config 'dhcp_range_start')
 DHCP_END=$(bashio::config 'dhcp_range_end')
 GATEWAY=$(bashio::config 'gateway')
