@@ -1,0 +1,124 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: jelmer/homeassistant-erbium
+
+jobs:
+  build:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract version from config.yaml
+        id: version
+        run: |
+          VERSION=$(grep '^version:' config.yaml | sed 's/version: *"\(.*\)"/\1/')
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Build and push aarch64
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm64
+          build-args: |
+            BUILD_FROM=ghcr.io/home-assistant/aarch64-base:3.18
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-aarch64
+          cache-from: type=gha,scope=aarch64
+          cache-to: type=gha,mode=max,scope=aarch64
+
+      - name: Build and push amd64
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          build-args: |
+            BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.18
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-amd64
+          cache-from: type=gha,scope=amd64
+          cache-to: type=gha,mode=max,scope=amd64
+
+      - name: Build and push armhf
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm/v6
+          build-args: |
+            BUILD_FROM=ghcr.io/home-assistant/armhf-base:3.18
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-armhf
+          cache-from: type=gha,scope=armhf
+          cache-to: type=gha,mode=max,scope=armhf
+
+      - name: Build and push armv7
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm/v7
+          build-args: |
+            BUILD_FROM=ghcr.io/home-assistant/armv7-base:3.18
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-armv7
+          cache-from: type=gha,scope=armv7
+          cache-to: type=gha,mode=max,scope=armv7
+
+      - name: Build and push i386
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/386
+          build-args: |
+            BUILD_FROM=ghcr.io/home-assistant/i386-base:3.18
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-i386
+          cache-from: type=gha,scope=i386
+          cache-to: type=gha,mode=max,scope=i386
+
+      - name: Create and push manifest
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-aarch64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armhf \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armv7 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-i386
+
+          docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-aarch64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-amd64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armhf \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armv7 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-i386

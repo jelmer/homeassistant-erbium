@@ -44,4 +44,4 @@ schema:
     - str
   log_level: list(trace|debug|info|warn|error)
   custom_config: str?
-image: "ghcr.io/{arch}-addon-erbium"
+image: "ghcr.io/jelmer/homeassistant-erbium"
