@@ -67,58 +67,13 @@ jobs:
           cache-from: type=gha,scope=amd64
           cache-to: type=gha,mode=max,scope=amd64
 
-      - name: Build and push armhf
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/arm/v6
-          build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/armhf-base:3.18
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-armhf
-          cache-from: type=gha,scope=armhf
-          cache-to: type=gha,mode=max,scope=armhf
-
-      - name: Build and push armv7
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/arm/v7
-          build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/armv7-base:3.18
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-armv7
-          cache-from: type=gha,scope=armv7
-          cache-to: type=gha,mode=max,scope=armv7
-
-      - name: Build and push i386
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/386
-          build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/i386-base:3.18
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}-i386
-          cache-from: type=gha,scope=i386
-          cache-to: type=gha,mode=max,scope=i386
-
       - name: Create and push manifest
         run: |
           VERSION=${{ steps.version.outputs.version }}
           docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION} \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-aarch64 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-amd64 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armhf \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armv7 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-i386
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-amd64
 
           docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-aarch64 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-amd64 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armhf \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-armv7 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-i386
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${VERSION}-amd64
