@@ -6,6 +6,7 @@ This directory contains tests for the Erbium Home Assistant addon.
 
 ```
 tests/
+├── integration-test.sh          # Full integration test (Docker container)
 ├── test-config-generation.bats  # Shell script tests using Bats
 └── run-tests.sh                  # Test runner script
 
@@ -18,7 +19,20 @@ frontend/
 
 ## Running Tests
 
-### Run All Tests
+### Run Integration Test (Recommended before deployment)
+
+```bash
+./tests/integration-test.sh
+```
+
+This test:
+- Builds the complete Docker image
+- Starts a container with Home Assistant-like environment
+- Tests service startup and configuration generation
+- Validates that Erbium actually runs without errors
+- Checks for missing directories, permission issues, etc.
+
+### Run All Unit Tests
 
 ```bash
 ./tests/run-tests.sh
