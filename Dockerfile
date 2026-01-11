@@ -46,6 +46,9 @@ COPY rootfs /
 # Copy frontend
 COPY frontend /frontend
 
+# Create Erbium data directory
+RUN mkdir -p /var/lib/erbium
+
 # Build permissions
 RUN chmod a+x /etc/services.d/*/run /etc/services.d/*/finish
 
