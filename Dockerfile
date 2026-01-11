@@ -47,7 +47,7 @@ COPY rootfs /
 COPY frontend /frontend
 
 # Build permissions
-RUN chmod a+x /etc/services.d/*/run
+RUN chmod a+x /etc/services.d/*/run /etc/services.d/*/finish
 
 # Set working directory back to root
 WORKDIR /
