@@ -23,10 +23,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
           cache-dependency-path: |
-            backend/package-lock.json
-            frontend/package-lock.json
+            backend/yarn.lock
+            frontend/yarn.lock
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -46,14 +46,14 @@ jobs:
       - name: Run Backend Tests
         working-directory: ./backend
         run: |
-          npm ci
-          npm run test:ci
+          yarn install --frozen-lockfile
+          yarn test:ci
 
       - name: Run Frontend Tests
         working-directory: ./frontend
         run: |
-          npm ci
-          npm run test:ci
+          yarn install --frozen-lockfile
+          yarn test:ci
 
       - name: Run Shell Script Tests
         run: |
