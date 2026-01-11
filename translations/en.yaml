@@ -1,0 +1,37 @@
+configuration:
+  dns_enabled:
+    name: Enable DNS Server
+    description: Enable the DNS server functionality
+  dhcp_enabled:
+    name: Enable DHCP Server
+    description: Enable the DHCP server functionality
+  router_advertisements_enabled:
+    name: Enable Router Advertisements
+    description: Enable IPv6 Router Advertisements
+  domain:
+    name: Local Domain
+    description: The local domain name for DNS resolution
+  dns_port:
+    name: DNS Port
+    description: Port for the DNS server (default 53)
+  dhcp_range_start:
+    name: DHCP Range Start
+    description: Starting IP address for DHCP range
+  dhcp_range_end:
+    name: DHCP Range End
+    description: Ending IP address for DHCP range
+  dhcp_lease_time:
+    name: DHCP Lease Time
+    description: How long DHCP leases last (e.g., 12h, 24h, 7d)
+  gateway:
+    name: Default Gateway
+    description: Default gateway IP address to advertise via DHCP
+  dns_servers:
+    name: Upstream DNS Servers
+    description: DNS servers to forward queries to
+  log_level:
+    name: Log Level
+    description: Logging verbosity level
+  custom_config:
+    name: Custom Configuration
+    description: Additional TOML configuration to append

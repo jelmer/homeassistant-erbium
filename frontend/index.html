@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+    Erbium Web UI
+    Web UI design inspired by ha-addon-dnsmasq-dhcp by f18m
+    https://github.com/f18m/ha-addon-dnsmasq-dhcp
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erbium DNS/DHCP Server</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Erbium DNS/DHCP Server</h1>
+            <p>Network services for small/home networks</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" onclick="showTab('dhcp')">DHCP Leases</button>
+            <button class="tab-button" onclick="showTab('dns')">DNS Records</button>
+            <button class="tab-button" onclick="showTab('config')">Configuration</button>
+        </nav>
+
+        <main>
+            <div id="dhcp-tab" class="tab-content active">
+                <h2>DHCP Leases</h2>
+                <div class="actions">
+                    <button onclick="refreshLeases()">Refresh</button>
+                </div>
+                <table id="leases-table">
+                    <thead>
+                        <tr>
+                            <th>IP Address</th>
+                            <th>MAC Address</th>
+                            <th>Hostname</th>
+                            <th>Expires</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leases-tbody">
+                        <tr>
+                            <td colspan="5" class="no-data">No active leases</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="dns-tab" class="tab-content">
+                <h2>DNS Records</h2>
+                <div class="actions">
+                    <button onclick="refreshDNS()">Refresh</button>
+                </div>
+                <table id="dns-table">
+                    <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Type</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dns-tbody">
+                        <tr>
+                            <td colspan="3" class="no-data">No DNS records</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="config-tab" class="tab-content">
+                <h2>Configuration</h2>
+                <div class="actions">
+                    <button onclick="refreshConfig()">Refresh</button>
+                    <button onclick="reloadService()">Reload Service</button>
+                </div>
+                <pre id="config-display">Loading configuration...</pre>
+            </div>
+        </main>
+
+        <footer>
+            <p>Erbium is powered by <a href="https://github.com/isomer/erbium" target="_blank">Erbium</a></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

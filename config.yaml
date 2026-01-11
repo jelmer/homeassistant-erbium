@@ -1,0 +1,47 @@
+name: Erbium DNS/DHCP Server
+version: "0.1.0"
+slug: erbium
+description: "Network services (DNS, DHCP, Router Advertisements) for small/home networks"
+url: "https://github.com/isomer/erbium"
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+init: false
+startup: services
+host_network: true
+ports:
+  8099/tcp: 8099
+ports_description:
+  8099/tcp: "Web UI"
+options:
+  dns_enabled: true
+  dhcp_enabled: true
+  router_advertisements_enabled: false
+  domain: "local"
+  dns_port: 53
+  dhcp_range_start: "192.168.1.100"
+  dhcp_range_end: "192.168.1.200"
+  dhcp_lease_time: "12h"
+  gateway: "192.168.1.1"
+  dns_servers:
+    - "8.8.8.8"
+    - "8.8.4.4"
+  log_level: "info"
+schema:
+  dns_enabled: bool
+  dhcp_enabled: bool
+  router_advertisements_enabled: bool
+  domain: str
+  dns_port: port
+  dhcp_range_start: str
+  dhcp_range_end: str
+  dhcp_lease_time: str
+  gateway: str
+  dns_servers:
+    - str
+  log_level: list(trace|debug|info|warn|error)
+  custom_config: str?
+image: "ghcr.io/{arch}-addon-erbium"
