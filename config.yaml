@@ -6,7 +6,6 @@ url: "https://github.com/isomer/erbium"
 arch:
   - aarch64
   - amd64
-  - i386
 init: false
 startup: services
 host_network: true
