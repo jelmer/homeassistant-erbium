@@ -1,11 +1,7 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Addon structure inspired by ha-addon-dnsmasq-dhcp by f18m
-# https://github.com/f18m/ha-addon-dnsmasq-dhcp
-
 # Install build dependencies and runtime requirements
-# Note: We use rustup instead of apk rust because Alpine's version is too old
 RUN apk add --no-cache \
     curl \
     sqlite-dev \

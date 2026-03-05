@@ -7,11 +7,11 @@ A Home Assistant addon for running [Erbium](https://github.com/isomer/erbium), a
 
 ## Features
 
-- **DNS Server**: Authoritative DNS server for your local network
-- **DHCP Server**: Automatic IP address assignment and management
-- **Router Advertisements**: IPv6 router advertisement support
-- **Web UI**: Modern web interface for monitoring DHCP leases and DNS records
-- **Flexible Configuration**: Configure through Home Assistant UI or custom TOML config
+- DNS server for your local network
+- DHCP server with automatic IP address assignment
+- IPv6 router advertisement support
+- Web interface for monitoring DHCP leases and DNS records
+- Configuration through Home Assistant UI or custom TOML config
 
 ## Installation
 
@@ -59,18 +59,7 @@ log_level: "info"
 
 ### Advanced Configuration
 
-For advanced users, you can provide custom TOML configuration in the `custom_config` option. This will be appended to the auto-generated configuration.
-
-Example:
-```toml
-[dns.zones.example]
-soa = "ns1.example.com admin.example.com 1 3600 600 86400 3600"
-
-[[dns.zones.example.records]]
-name = "www"
-type = "A"
-value = "192.168.1.10"
-```
+For advanced users, you can provide custom configuration in the `custom_config` option. This will be appended to the auto-generated configuration file (which uses Erbium's YAML-based format — see [Erbium docs](https://github.com/isomer/erbium) for details).
 
 ## Network Requirements
 
@@ -125,48 +114,13 @@ The web UI provides:
 
 ## Development
 
-### Running Tests
-
-This addon includes a comprehensive test suite:
-
-```bash
-# Run all tests
-./tests/run-tests.sh
-
-# Run backend tests only
-cd backend && npm test
-
-# Run frontend tests only
-cd frontend && npm test
-
-# Run with coverage
-npm test -- --coverage
-```
-
-See [tests/README.md](tests/README.md) for detailed testing documentation.
-
-### Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Write tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
-
-## Support
-
-- [Report Issues](https://github.com/isomer/erbium/issues)
-- [Erbium Documentation](https://github.com/isomer/erbium)
-- [Home Assistant Community](https://community.home-assistant.io/)
+See [tests/README.md](tests/README.md) for how to run the test suite.
 
 ## License
 
-This addon configuration is licensed under Apache 2.0.
-Erbium itself is licensed under Apache 2.0.
+Apache 2.0
 
 ## Credits
 
 - [Erbium](https://github.com/isomer/erbium) by isomer - The DNS/DHCP server that powers this addon
-- [ha-addon-dnsmasq-dhcp](https://github.com/f18m/ha-addon-dnsmasq-dhcp) by f18m - Architectural inspiration for this addon's structure and web UI approach
+- [ha-addon-dnsmasq-dhcp](https://github.com/f18m/ha-addon-dnsmasq-dhcp) by f18m - Architectural inspiration

@@ -1,10 +1,4 @@
 #!/usr/bin/env node
-/**
- * Erbium Web UI Backend Server
- *
- * Architectural approach inspired by ha-addon-dnsmasq-dhcp by f18m
- * https://github.com/f18m/ha-addon-dnsmasq-dhcp
- */
 
 const express = require('express');
 const path = require('path');
