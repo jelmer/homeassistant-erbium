@@ -84,14 +84,7 @@ For DNS resolution to work, clients need to use this server. This happens automa
 
 ### Static DHCP Leases
 
-To configure static IP assignments by MAC address, use the `custom_config` option:
-
-```toml
-[[dhcp.static_leases]]
-mac = "aa:bb:cc:dd:ee:ff"
-ip = "192.168.1.50"
-hostname = "printer"
-```
+To configure static IP assignments by MAC address, use the `custom_config` option. See the [Erbium documentation](https://github.com/isomer/erbium) for the configuration format.
 
 ## Troubleshooting
 
@@ -124,6 +117,3 @@ To remove the addon:
 3. Uninstall the addon
 4. Reboot client devices to get new DHCP leases from router
 
----
-
-**Credits**: This addon is powered by [Erbium](https://github.com/isomer/erbium) by isomer. Architecture inspired by [ha-addon-dnsmasq-dhcp](https://github.com/f18m/ha-addon-dnsmasq-dhcp) by f18m.

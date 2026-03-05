@@ -1,32 +1,10 @@
-# Node modules
 node_modules/
 package-lock.json
-
-# Build artifacts
-*.o
-*.so
-target/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-npm-debug.log*
-
-# Tests
 coverage/
 .nyc_output/
 *.lcov
 test-results/
-
-# Config
+*.log
+npm-debug.log*
 config/
+yarn-error.log
