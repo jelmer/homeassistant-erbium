@@ -3,6 +3,8 @@
 ![Tests](https://github.com/jelmer/homeassistant-erbium/workflows/Tests/badge.svg)
 [![codecov](https://codecov.io/gh/jelmer/homeassistant-erbium/branch/master/graph/badge.svg)](https://codecov.io/gh/jelmer/homeassistant-erbium)
 
+[![Add repository to my Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fjelmer%2Fhomeassistant-erbium)
+
 A Home Assistant addon for running [Erbium](https://github.com/isomer/erbium), a modern DNS, DHCP, and Router Advertisement server written in Rust for small and home networks.
 
 ## Features
