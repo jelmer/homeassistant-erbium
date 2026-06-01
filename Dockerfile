@@ -11,12 +11,13 @@ RUN apk add --no-cache \
     npm \
     pkgconf
 
-# Install Rust via rustup (Alpine's rust 1.71 is too old for Erbium)
+# Install Rust via rustup (Alpine's packaged rust is too old for Erbium,
+# which requires edition 2024 / Rust >= 1.85)
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
-    sh -s -- -y --default-toolchain 1.75.0 --profile minimal
+    sh -s -- -y --default-toolchain stable --profile minimal
 
 # Set environment for SQLite dynamic linking (musl tries to static link by default)
 ENV RUSTFLAGS="-C target-feature=-crt-static" \
