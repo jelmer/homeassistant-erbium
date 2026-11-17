@@ -1,5 +1,5 @@
 name: Erbium DNS/DHCP Server
-version: "0.1.0"
+version: "0.1.1"
 slug: erbium
 description: "Network services (DNS, DHCP, Router Advertisements) for small/home networks"
 url: "https://github.com/isomer/erbium"

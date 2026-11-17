@@ -1,6 +1,6 @@
 {
   "name": "erbium-frontend",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Frontend for Erbium Home Assistant addon",
   "scripts": {
     "test": "jest --coverage",

@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.1] - 2026-11-17
+
+### Added
+
+- LICENSE file (Apache-2.0).
+- "Add to Home Assistant" button in README for easier installation.
+
+### Changed
+
+- Build Erbium with the stable Rust toolchain instead of nightly, fixing
+  Docker builds that required edition 2024.
+
 ## [0.1.0] - 2025-06-01
 
 ### Added
